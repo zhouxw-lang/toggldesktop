@@ -17,6 +17,11 @@ enum Color: String, CaseIterable {
     case timelineBackgroundColor = "timeline-background-color"
     case collectionViewBackgroundColor = "collectionview-background-color"
     case blackText = "black-text-color"
+    case borderDefault = "border-default"
+    case whiteBackgroundColor = "white-background-color"
+    case projectColorButtonBorder = "color-project-btn-border-color"
+    case shadow = "shadow"
+    case onboardingBackground = "onboarding-background-color"
 
     var color: NSColor {
         if #available(OSX 10.13, *) {
@@ -24,6 +29,10 @@ enum Color: String, CaseIterable {
         } else {
             return legacyColor
         }
+    }
+
+    var cgColor: CGColor {
+        return color.cgColor
     }
 
     fileprivate var legacyColor: NSColor {
@@ -44,6 +53,14 @@ enum Color: String, CaseIterable {
             return ConvertHexColor.hexCode(toNSColor: "#FEF9F8")
         case .blackText:
             return ConvertHexColor.hexCode(toNSColor: "#2C1338")
+        case .borderDefault,
+             .projectColorButtonBorder,
+             .shadow:
+            return NSColor.black.withAlphaComponent(0.1)
+        case .whiteBackgroundColor:
+            return NSColor.white
+        case .onboardingBackground:
+            return NSColor.black.withAlphaComponent(0.5)
         }
     }
 }
@@ -52,6 +69,7 @@ enum Color: String, CaseIterable {
 extension NSColor {
     static var togglGreen: NSColor { Color.green.color }
     static var collectionViewBackgroundColor: NSColor { Color.collectionViewBackgroundColor.color }
+    static var shadow: NSColor { Color.shadow.color }
 }
 
 @objc enum ColorObjc: Int {
