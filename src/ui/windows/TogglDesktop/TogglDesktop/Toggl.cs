@@ -93,7 +93,7 @@ public static partial class Toggl
 
     static Toggl()
     {
-        UpdateService = new UpdateService(Toggl.IsUpdateCheckDisabled(), Toggl.UpdatesPath);
+        UpdateService = new UpdateService(true, Toggl.UpdatesPath); // Always disabled 
     }
 
     public static UpdateService UpdateService { get; }
