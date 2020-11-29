@@ -47,6 +47,9 @@ namespace TogglDesktop
         private IMainView activeView;
         private bool closing;
 
+        private bool pomodoro = false;
+        private long pomodoroMinutes = -1L;
+
         #endregion
 
         public MainWindow()
@@ -184,9 +187,15 @@ namespace TogglDesktop
                 new PreferencesWindow(),
             };
             this.idleNotificationWindow = new IdleNotificationWindow();
+            
+            this.TaskbarItemInfo = new System.Windows.Shell.TaskbarItemInfo
+            {
+                ProgressState = System.Windows.Shell.TaskbarItemProgressState.Normal, ProgressValue = 0
+            };
 
             this.editPopup.EditView.SetTimer(this.timerEntryListView.Timer);
             this.timerEntryListView.Timer.ViewModel.WhenValueChanged(x => x.DurationText).Subscribe(x => updateTaskbarTooltip(this, x));
+            this.timerEntryListView.Timer.ViewModel.WhenValueChanged(x => x.AbsDurationInSeconds).Subscribe(x => updateTaskbarItemInfo(this, x));
             this.timerEntryListView.Timer.StartStopButtonClicked += ()  => closeEditPopup(true);
             this.timerEntryListView.Entries.SetEditPopup(this.editPopup);
             this.timerEntryListView.Entries.CloseEditPopup += (sender, args) => this.closeEditPopup(true);
@@ -438,6 +447,9 @@ namespace TogglDesktop
             this.idleDetectionTimer.IsEnabled = settings.UseIdleDetection;
             this.Topmost = settings.OnTop;
             this.SetManualMode(settings.ManualMode, true);
+
+            this.pomodoro = settings.Pomodoro;
+            this.pomodoroMinutes = settings.PomodoroMinutes;
         }
 
         private void onDisplayInAppNotification(string title, string text, string button, string url)
@@ -582,6 +594,17 @@ namespace TogglDesktop
                 return;
 
             this.trayToolTip.SetDuration(s);
+        }
+
+        private void updateTaskbarItemInfo(object sender, long absDurationInSeconds)
+        {
+            if (this.TryBeginInvoke(updateTaskbarItemInfo, sender, absDurationInSeconds))
+                return;
+            
+            if (this.pomodoro && this.pomodoroMinutes > 0)
+            {
+                this.TaskbarItemInfo.ProgressValue = absDurationInSeconds / 60.0 / this.pomodoroMinutes;
+            }
         }
 
         #endregion

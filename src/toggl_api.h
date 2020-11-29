@@ -1171,6 +1171,9 @@ extern "C" {
     TOGGL_EXPORT char_t *toggl_format_tracking_time_duration(
         const int64_t duration_in_seconds);
 
+    TOGGL_EXPORT int64_t toggl_abs_duration(
+        const int64_t duration_in_seconds);
+
     // You must free() the result
     TOGGL_EXPORT char_t *toggl_format_tracked_time_duration(
         const int64_t duration_in_seconds);

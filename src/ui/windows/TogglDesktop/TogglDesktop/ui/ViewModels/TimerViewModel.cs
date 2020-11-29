@@ -38,6 +38,9 @@ namespace TogglDesktop.ui.ViewModels
 
         [Reactive]
         public string DurationText { get; set; }
+        
+        [Reactive]
+        public long AbsDurationInSeconds { get; set; }
 
         [Reactive]
         public bool IsDescriptionChangedNotByUser { get; private set; } = false;
@@ -69,6 +72,7 @@ namespace TogglDesktop.ui.ViewModels
                     return;
 
                 DurationText = Toggl.FormatDurationInSecondsHHMMSS(runningTimeEntry.DurationInSeconds);
+                AbsDurationInSeconds = Toggl.AbsDuration(runningTimeEntry.DurationInSeconds);
             };
         }
 
@@ -87,6 +91,7 @@ namespace TogglDesktop.ui.ViewModels
             runningTimeEntry = item;
             TimeEntryLabelViewModel = item.ToTimeEntryLabelViewModel();
             DurationText = Toggl.FormatDurationInSecondsHHMMSS(item.DurationInSeconds);
+            AbsDurationInSeconds = Toggl.AbsDuration(item.DurationInSeconds);
             DurationPanelToolTip = "started at " + item.StartTimeString;
         }
 
@@ -102,6 +107,7 @@ namespace TogglDesktop.ui.ViewModels
             IsRunning = running;
             SetDescription("");
             DurationText = "";
+            AbsDurationInSeconds = 0;
         }
 
         private void onStoppedTimerState()
