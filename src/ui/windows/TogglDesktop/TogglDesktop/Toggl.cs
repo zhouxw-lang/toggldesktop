@@ -765,6 +765,11 @@ public static partial class Toggl
         return toggl_format_tracking_time_duration(duration_in_seconds);
     }
 
+    public static long AbsDuration(long duration_in_seconds)
+    {
+        return toggl_abs_duration(duration_in_seconds);
+    }
+
     public static long AddAutotrackerRule(string terms, ulong projectId, ulong taskId, string startTime = "", string endTime = "", byte daysOfWeek = 0)
     {
         return toggl_autotracker_add_rule(ctx, terms, projectId, taskId, startTime, endTime, daysOfWeek);

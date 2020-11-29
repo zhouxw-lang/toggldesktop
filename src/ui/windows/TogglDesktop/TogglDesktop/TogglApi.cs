@@ -1755,6 +1755,10 @@ private static extern bool toggl_set_promotion_response(
 private static extern string toggl_format_tracking_time_duration(
         Int64 duration_in_seconds);
 
+[DllImport(dll, CharSet = charset, CallingConvention = convention)]
+private static extern Int64 toggl_abs_duration(
+        Int64 duration_in_seconds);
+
     // You must free() the result
 [DllImport(dll, CharSet = charset, CallingConvention = convention)]
 private static extern string toggl_format_tracked_time_duration(

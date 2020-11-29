@@ -639,6 +639,12 @@ char_t *toggl_format_tracking_time_duration(
     return copy_string(formatted);
 }
 
+int64_t toggl_abs_duration(
+    const int64_t duration_in_seconds) {
+    
+    return toggl::Formatter::AbsDuration(duration_in_seconds);
+}
+
 char_t *toggl_format_tracked_time_duration(
     const int64_t duration_in_seconds) {
 
