@@ -1708,6 +1708,11 @@ private static extern bool toggl_timeline_is_recording_enabled(
         IntPtr context);
 
 [DllImport(dll, CharSet = charset, CallingConvention = convention)]
+[return:MarshalAs(UnmanagedType.I1)]
+private static extern bool toggl_pomodoro_break_running(
+        IntPtr context);
+
+[DllImport(dll, CharSet = charset, CallingConvention = convention)]
 private static extern void toggl_set_sleep(
         IntPtr context);
 

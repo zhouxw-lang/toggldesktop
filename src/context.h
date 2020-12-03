@@ -469,6 +469,10 @@ class TOGGL_INTERNAL_EXPORT Context : public TimelineDatasource {
         return user_ && user_->RecordTimeline();
     }
 
+    bool IsPomodoroBreakRunning() const {
+        return pomodoro_break_entry_ != nullptr;
+    }
+
     error SetDefaultProject(
         const Poco::UInt64 pid,
         const Poco::UInt64 tid);

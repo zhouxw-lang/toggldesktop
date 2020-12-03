@@ -49,6 +49,9 @@ namespace TogglDesktop
 
         private bool pomodoro = false;
         private long pomodoroMinutes = -1L;
+        
+        private bool pomodoroBreak = false;
+        private long pomodoroBreakMinutes = -1L;
 
         #endregion
 
@@ -450,6 +453,9 @@ namespace TogglDesktop
 
             this.pomodoro = settings.Pomodoro;
             this.pomodoroMinutes = settings.PomodoroMinutes;
+
+            this.pomodoroBreak = settings.PomodoroBreak;
+            this.pomodoroBreakMinutes = settings.PomodoroBreakMinutes;
         }
 
         private void onDisplayInAppNotification(string title, string text, string button, string url)
@@ -600,10 +606,24 @@ namespace TogglDesktop
         {
             if (this.TryBeginInvoke(updateTaskbarItemInfo, sender, absDurationInSeconds))
                 return;
-            
-            if (this.pomodoro && this.pomodoroMinutes > 0)
+
+            try
             {
-                this.TaskbarItemInfo.ProgressValue = absDurationInSeconds / 60.0 / this.pomodoroMinutes;
+                if (Toggl.IsPomodoroBreakRunning())
+                {
+                    if (this.pomodoroBreak && this.pomodoroBreakMinutes > 0)
+                    {
+                        this.TaskbarItemInfo.ProgressValue = absDurationInSeconds / 60.0 / this.pomodoroBreakMinutes;
+                    }
+                }
+                else if (this.pomodoro && this.pomodoroMinutes > 0)
+                {
+                    this.TaskbarItemInfo.ProgressValue = absDurationInSeconds / 60.0 / this.pomodoroMinutes;
+                }
+            }
+            catch (Exception)
+            {
+                // ignored, upon startup Toggl.IsPomodoroBreakRunning() will be called and exception will be thrown, not sure why
             }
         }
 
