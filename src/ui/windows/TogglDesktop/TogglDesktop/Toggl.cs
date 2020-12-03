@@ -620,6 +620,11 @@ public static partial class Toggl
     {
         return toggl_timeline_is_recording_enabled(ctx);
     }
+    
+    public static bool IsPomodoroBreakRunning()
+    {
+        return toggl_pomodoro_break_running(ctx);
+    }
 
     public static string GetTimeOfDayFormat() => toggl_time_of_day_format(ctx);
 

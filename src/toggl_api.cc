@@ -1023,6 +1023,11 @@ bool_t toggl_timeline_is_recording_enabled(
     return app(context)->IsTimelineRecordingEnabled();
 }
 
+bool_t toggl_pomodoro_break_running(
+    void *context) {
+    return app(context)->IsPomodoroBreakRunning();
+}
+
 char_t *toggl_time_of_day_format(
     void *context) {
     return copy_string(app(context)->GetTimeOfDayFormat());

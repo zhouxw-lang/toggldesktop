@@ -1137,6 +1137,9 @@ extern "C" {
     TOGGL_EXPORT bool_t toggl_timeline_is_recording_enabled(
         void *context);
 
+    TOGGL_EXPORT bool_t toggl_pomodoro_break_running(
+        void *context);
+
     TOGGL_EXPORT char_t *toggl_time_of_day_format(
         void *context);
 

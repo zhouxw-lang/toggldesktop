@@ -469,6 +469,10 @@ class TOGGL_INTERNAL_EXPORT Context : public TimelineDatasource {
         return user_ && user_->RecordTimeline();
     }
 
+    bool IsPomodoroBreakRunning() const {
+        return pomodoro_break_entry_ != nullptr;
+    }
+
     std::string GetTimeOfDayFormat() const {
         return user_ ? user_->TimeOfDayFormat() : "";
     }
